@@ -23,7 +23,7 @@
   },
   "scripts": {
     "start": "REACT_APP_API_URL=http://0.0.0.0:10000 react-scripts start",
-    "build": "REACT_APP_API_URL=https://ai-murder-mystery-hackathon.onrender.com react-scripts build",
+    "build": "REACT_APP_API_URL=https://ai-alibis.vercel.app react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

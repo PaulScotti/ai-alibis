@@ -1,0 +1,46 @@
+service: react-frontend-service
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: us-east-1
+
+plugins:
+  - serverless-finch
+
+custom:
+  client:
+    bucketName: my-react-app-bucket-${self:provider.region}
+    distributionFolder: build
+
+resources:
+  Resources:
+    ReactAppBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.client.bucketName}
+        WebsiteConfiguration:
+          IndexDocument: index.html
+          ErrorDocument: index.html
+    ReactAppBucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket: !Ref ReactAppBucket
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Sid: PublicReadGetObject
+              Effect: Allow
+              Principal: "*"
+              Action: s3:GetObject
+              Resource: !Sub "arn:aws:s3:::${self:custom.client.bucketName}/*"
+
+functions:
+  deployReactApp:
+    handler: handler.deploy
+    events:
+      - s3:
+          bucket: ${self:custom.client.bucketName}
+          event: s3:ObjectCreated:*
+          rules:
+            - suffix: .html

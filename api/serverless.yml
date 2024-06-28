@@ -15,14 +15,6 @@ functions:
           path: /{proxy+}
           method: any
 
-plugins:
-  - serverless-python-requirements
-
-custom:
-  pythonRequirements:
-    dockerizePip: true
-    usePoetry: false
-
 resources:
   Resources:
     ApiGatewayRestApi:

@@ -2,7 +2,7 @@ service: python-api-service
 
 provider:
   name: aws
-  runtime: python3.11
+  runtime: python3.10
 
 functions:
   api:

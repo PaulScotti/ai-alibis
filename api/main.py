@@ -1,4 +1,4 @@
-
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from invoke_types import InvocationRequest, InvocationResponse
@@ -10,9 +10,7 @@ from datetime import datetime, timezone
 
 app = FastAPI()
 
-origins = [
-    "*"
-]
+origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
@@ -21,7 +19,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 def create_conversation_turn(conn, request: InvocationRequest) -> int:
     with conn.cursor() as cur:        
@@ -33,9 +30,7 @@ def create_conversation_turn(conn, request: InvocationRequest) -> int:
              MODEL, MODEL_KEY, request.actor.name, json.dumps(serialized_chat_messages), )
         )
         turn_id = cur.fetchone()[0]
-
     return turn_id
-
 
 def store_response(conn, turn_id: int, response: InvocationResponse):
     with conn.cursor() as cur:
@@ -46,26 +41,21 @@ def store_response(conn, turn_id: int, response: InvocationResponse):
                 response.refined_response, datetime.now(tz=timezone.utc).isoformat(), turn_id, )
         )
 
-
-
 def prompt_ai(conn, request: InvocationRequest) -> InvocationResponse:
     turn_id = create_conversation_turn(conn, request)
     print(f"Serving turn {turn_id}")
 
     # UNREFINED
     unrefined_response = respond_initial(conn, turn_id, request)
-
     print(f"\nunrefined_response: {unrefined_response}\n")
 
     critique_response = critique(conn, turn_id, request, unrefined_response)
-
     print(f"\ncritique_response: {critique_response}\n")
 
     problems_found = check_whether_to_refine(critique_response)
 
     if problems_found:
         refined_response = refine(conn, turn_id, request, critique_response, unrefined_response)
-        
         final_response = refined_response
     else:
         final_response = unrefined_response
@@ -83,11 +73,14 @@ def prompt_ai(conn, request: InvocationRequest) -> InvocationResponse:
 
     return response
 
-
-
 @app.post("/invoke")
 async def invoke(request: InvocationRequest):
     with pool().connection() as conn:
         response = prompt_ai(conn, request)
-
         return response.model_dump()
+
+if __name__ == "__main__":
+    import uvicorn
+    import os
+    port = int(os.environ.get("PORT", 10000))
+    uvicorn.run(app, host="0.0.0.0", port=port)

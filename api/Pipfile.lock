@@ -5,7 +5,8 @@
         },
         "pipfile-spec": 6,
         "requires": {
-            "python_version": "3.11"
+            "python_full_version": "3.12.2",
+            "python_version": "3.12"
         },
         "sources": [
             {
@@ -251,6 +252,14 @@
             "markers": "python_version >= '3.8'",
             "version": "==0.25.2"
         },
+        "huggingface-hub": {
+            "hashes": [
+                "sha256:32e9a9a6843c92f253ff9ca16b9985def4d80a93fb357af5353f770ef74a81be",
+                "sha256:3429e25f38ccb834d310804a3b711e7e4953db5a9e420cc147a5e194ca90fd17"
+            ],
+            "markers": "python_full_version >= '3.8.0'",
+            "version": "==0.22.2"
+        },
         "idna": {
             "hashes": [
                 "sha256:9ecdbbd083b06798ae1e86adcbfe8ab1479cf864e4ee30fe4e46a003d12491ca",
@@ -258,6 +267,15 @@
             ],
             "markers": "python_version >= '3.5'",
             "version": "==3.6"
+        },
+        "mistralai": {
+            "hashes": [
+                "sha256:3d74146d26ce0e93333614a5c591d407867c78a09855d4550c94a51c1775a1a6",
+                "sha256:c2e645f1cd26b35c728de9ef954927384d190f439a165a041bd935937fbc3f04"
+            ],
+            "index": "pypi",
+            "markers": "python_version >= '3.9' and python_version < '4.0'",
+            "version": "==0.1.8"
         },
         "orjson": {
             "hashes": [

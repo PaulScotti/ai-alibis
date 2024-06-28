@@ -1,29 +1,25 @@
-service: python-api-service
+before_compile:
+  - echo "Before compile"
+  - npm install -g serverless
 
-provider:
-  name: aws
-  runtime: python3.11
+before_build:
+  - echo "Before build"
+  # Install dependencies for the frontend
+  - cd web && npm install && cd ..
 
-functions:
-  api:
-    handler: main.lambda_handler
-    events:
-      - http:
-          path: /
-          method: any
-      - http:
-          path: /{proxy+}
-          method: any
+before_deploy:
+  - echo "Before deploy"
+  # Build and deploy the frontend
+  - cd web && npm run build && serverless deploy --verbose --stage $SEED_STAGE_NAME && cd ..
+  # Install dependencies and deploy the backend
+  - cd api && pip install pipenv && pipenv install --deploy --ignore-pipfile
+  - serverless deploy --verbose --stage $SEED_STAGE_NAME && cd ..
 
-resources:
-  Resources:
-    ApiGatewayRestApi:
-      Type: AWS::ApiGateway::RestApi
-      Properties:
-        Name: python-api-service
-    ApiGatewayDeployment:
-      Type: AWS::ApiGateway::Deployment
-      Properties:
-        RestApiId:
-          Ref: ApiGatewayRestApi
-        StageName: dev
+after_deploy:
+  - echo "After deploy"
+
+before_remove:
+  - echo "Before remove"
+
+after_remove:
+  - echo "After remove"

@@ -8,9 +8,9 @@
 
 **Authors:** [Paul Scotti](https://paulscotti.github.io/) and [Will Beddow](https://www.willbeddow.com/)
 
-We employ a principles & refinement prompting approach inspired by SynthLab's Pink Elephants paper. Read more: [Pink Elephants Paper](https://arxiv.org/abs/2402.07896)
+We employ a principles & refinement prompting approach inspired by SynthLab's research paper, [Suppressing Pink Elephants with Direct Principle Feedback](https://arxiv.org/abs/2402.07896)
 
-Special thanks to Synthlabs for organizing the hackathon that inspired this project. Learn more: [Synthlabs](https://www.synthlabs.ai/)
+Special thanks to [Synthlabs](https://www.synthlabs.ai/) for organizing the hackathon that inspired this project.
 
 ## Setup
 1. Git clone the repo

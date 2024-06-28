@@ -48,7 +48,6 @@
   "devDependencies": {
     "postcss": "^8.4.38",
     "postcss-preset-mantine": "^1.13.0",
-    "postcss-simple-vars": "^7.0.1",
-    "serverless-finch": "^2.7.0"
+    "postcss-simple-vars": "^7.0.1"
   }
 }

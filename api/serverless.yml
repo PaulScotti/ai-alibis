@@ -3,12 +3,6 @@ service: python-api-service
 provider:
   name: aws
   runtime: python3.12
-  environment:
-    DB_HOST: ${env:DB_HOST}
-    DB_USER: ${env:DB_USER}
-    DB_PASSWORD: ${env:DB_PASSWORD}
-    DB_NAME: ${env:DB_NAME}
-    ANTHROPIC_API_KEY: ${env:ANTHROPIC_API_KEY}
 
 functions:
   api:

@@ -1,0 +1,29 @@
+service: python-api-service
+
+provider:
+  name: aws
+  runtime: python3.11
+
+functions:
+  api:
+    handler: main.lambda_handler
+    events:
+      - http:
+          path: /
+          method: any
+      - http:
+          path: /{proxy+}
+          method: any
+
+resources:
+  Resources:
+    ApiGatewayRestApi:
+      Type: AWS::ApiGateway::RestApi
+      Properties:
+        Name: python-api-service
+    ApiGatewayDeployment:
+      Type: AWS::ApiGateway::Deployment
+      Properties:
+        RestApiId:
+          Ref: ApiGatewayRestApi
+        StageName: dev

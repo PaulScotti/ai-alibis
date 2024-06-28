@@ -6,7 +6,6 @@ name = "pypi"
 [packages]
 fastapi = "*"
 uvicorn = {extras = ["standard"], version = "*"}
-mistralai = "*"
 python-dotenv = "*"
 anthropic = "*"
 psycopg = {extras = ["pool", "binary"], version = "*"}
@@ -14,5 +13,4 @@ psycopg = {extras = ["pool", "binary"], version = "*"}
 [dev-packages]
 
 [requires]
-python_version = "3.12"
-python_full_version = "3.12.2"
+python_version = "3.11"

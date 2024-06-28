@@ -5,12 +5,17 @@ provider:
   runtime: nodejs14.x
   region: us-east-1
 
+custom:
+  client:
+    bucketName: my-react-app-bucket-${self:provider.region}
+    distributionFolder: build
+
 resources:
   Resources:
     ReactAppBucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: my-react-app-bucket
+        BucketName: ${self:custom.client.bucketName}
         WebsiteConfiguration:
           IndexDocument: index.html
           ErrorDocument: index.html
@@ -25,14 +30,14 @@ resources:
               Effect: Allow
               Principal: "*"
               Action: s3:GetObject
-              Resource: !Sub "arn:aws:s3:::${ReactAppBucket}/*"
+              Resource: !Sub "arn:aws:s3:::${self:custom.client.bucketName}/*"
 
 functions:
   deployReactApp:
     handler: handler.deploy
     events:
       - s3:
-          bucket: my-react-app-bucket
+          bucket: ${self:custom.client.bucketName}
           event: s3:ObjectCreated:*
           rules:
             - suffix: .html
